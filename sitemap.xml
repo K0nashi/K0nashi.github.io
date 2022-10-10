@@ -2,16 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://blog.k0nashi.cn/2022/10/10/%E4%BD%BF%E7%94%A8QEMU%E8%BF%9B%E8%A1%8CIOT%E5%9B%BA%E4%BB%B6%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</loc>
+    <loc>http://blog.k0nashi.cn/2022/09/06/notes/</loc>
     
     <lastmod>2022-10-10</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.k0nashi.cn/2022/09/06/notes/</loc>
+    <loc>http://blog.k0nashi.cn/2022/10/10/%E4%BD%BF%E7%94%A8QEMU%E8%BF%9B%E8%A1%8CIOT%E5%9B%BA%E4%BB%B6%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</loc>
     
-    <lastmod>2022-09-08</lastmod>
+    <lastmod>2022-10-10</lastmod>
     
   </url>
   
@@ -93,14 +93,14 @@
   </url>
   
   <url>
-    <loc>http://blog.k0nashi.cn/link/index.html</loc>
+    <loc>http://blog.k0nashi.cn/tags/index.html</loc>
     
     <lastmod>2021-09-01</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.k0nashi.cn/tags/index.html</loc>
+    <loc>http://blog.k0nashi.cn/link/index.html</loc>
     
     <lastmod>2021-09-01</lastmod>
     
@@ -189,13 +189,6 @@
   
   <url>
     <loc>http://blog.k0nashi.cn/categories/notes/</loc>
-    <lastmod>2022-10-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.k0nashi.cn/categories/note/</loc>
     <lastmod>2022-10-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
