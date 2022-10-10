@@ -6,7 +6,7 @@
   <link href="http://blog.k0nashi.cn/atom.xml" rel="self"/>
   
   <link href="http://blog.k0nashi.cn/"/>
-  <updated>2022-09-08T07:58:17.000Z</updated>
+  <updated>2022-10-10T10:03:18.126Z</updated>
   <id>http://blog.k0nashi.cn/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用QEMU进行IOT固件的虚拟环境搭建</title>
+    <link href="http://blog.k0nashi.cn/2022/10/10/%E4%BD%BF%E7%94%A8QEMU%E8%BF%9B%E8%A1%8CIOT%E5%9B%BA%E4%BB%B6%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    <id>http://blog.k0nashi.cn/2022/10/10/%E4%BD%BF%E7%94%A8QEMU%E8%BF%9B%E8%A1%8CIOT%E5%9B%BA%E4%BB%B6%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</id>
+    <published>2022-10-10T10:00:34.000Z</published>
+    <updated>2022-10-10T10:03:18.126Z</updated>
+    
+    
+    
+    
+    <category term="notes" scheme="http://blog.k0nashi.cn/categories/notes/"/>
+    
+    
+    <category term="IoT" scheme="http://blog.k0nashi.cn/tags/IoT/"/>
+    
+    <category term="qemu" scheme="http://blog.k0nashi.cn/tags/qemu/"/>
+    
+    <category term="虚拟化" scheme="http://blog.k0nashi.cn/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
+    
+  </entry>
   
   <entry>
     <title>pwn各版本数据结构笔记</title>
