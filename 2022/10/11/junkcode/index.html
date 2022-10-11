@@ -1,0 +1,239 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>基础花指令&amp;去花指令 | K0nashi</title><meta name="keywords" content="reverse,bypass"><meta name="author" content="K0nashi"><meta name="copyright" content="K0nashi"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="基础花指令&amp;去花指令花指令又称脏字节，英文为”junkcode”，顾名思义，即在程序中加入的一些垃圾指令，其目的是在不妨碍原有程序执行的前提下，阻碍程序反编译，增加静态分析难度，隐匿不想被逆向分析的代码块，混淆代码，绕过特征识别。 以下将按照不同分类介绍一些常见的花指令： 0x01不可执行花指令它是利用反汇编器静态分析算法的缺陷使得代码在反编译解析时出错。其原理使反汇编分析执行流命中执行会">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础花指令&amp;去花指令">
+<meta property="og:url" content="http://blog.k0nashi.cn/2022/10/11/junkcode/index.html">
+<meta property="og:site_name" content="K0nashi">
+<meta property="og:description" content="基础花指令&amp;去花指令花指令又称脏字节，英文为”junkcode”，顾名思义，即在程序中加入的一些垃圾指令，其目的是在不妨碍原有程序执行的前提下，阻碍程序反编译，增加静态分析难度，隐匿不想被逆向分析的代码块，混淆代码，绕过特征识别。 以下将按照不同分类介绍一些常见的花指令： 0x01不可执行花指令它是利用反汇编器静态分析算法的缺陷使得代码在反编译解析时出错。其原理使反汇编分析执行流命中执行会">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://blog.k0nashi.cn/2022/10/11/junkcode/1665457237523-2f8b9fb8-c1b8-45c1-b3f6-6d6dc884b739.png">
+<meta property="article:published_time" content="2022-10-11T05:56:08.000Z">
+<meta property="article:modified_time" content="2022-10-11T06:01:55.850Z">
+<meta property="article:author" content="K0nashi">
+<meta property="article:tag" content="reverse">
+<meta property="article:tag" content="bypass">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.k0nashi.cn/2022/10/11/junkcode/1665457237523-2f8b9fb8-c1b8-45c1-b3f6-6d6dc884b739.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://blog.k0nashi.cn/2022/10/11/junkcode/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-10-11 14:01:55'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="K0nashi" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间线</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/2022/10/11/junkcode/1665457237523-2f8b9fb8-c1b8-45c1-b3f6-6d6dc884b739.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">K0nashi</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间线</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><h1 class="post-title">基础花指令&amp;去花指令</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-10-11T05:56:08.000Z" title="发表于 2022-10-11 13:56:08">2022-10-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-10-11T06:01:55.850Z" title="更新于 2022-10-11 14:01:55">2022-10-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/notes/">notes</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="基础花指令-amp-去花指令"><a href="#基础花指令-amp-去花指令" class="headerlink" title="基础花指令&amp;去花指令"></a>基础花指令&amp;去花指令</h1><p>花指令又称脏字节，英文为”junkcode”，顾名思义，即在程序中加入的一些垃圾指令，其目的是在不妨碍原有程序执行的前提下，阻碍程序反编译，增加静态分析难度，隐匿不想被逆向分析的代码块，混淆代码，绕过特征识别。</p>
+<p>以下将按照不同分类介绍一些常见的花指令：</p>
+<h2 id="0x01不可执行花指令"><a href="#0x01不可执行花指令" class="headerlink" title="0x01不可执行花指令"></a>0x01不可执行花指令</h2><p>它是利用反汇编器静态分析算法的缺陷使得代码在反编译解析时出错。其原理使反汇编分析执行流命中执行会出错的垃圾数据，就会造成解析错误，而实际执行过程中垃圾数据并不会执行。</p>
+<h3 id="1-硬编码多字节指令"><a href="#1-硬编码多字节指令" class="headerlink" title="1.硬编码多字节指令"></a>1.硬编码多字节指令</h3><p>最常见的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">jz Label        // 采用条件互补的方法跳转绕过垃圾数据</span><br><span class="line">jnz Label</span><br><span class="line">junkcode</span><br><span class="line">Label:</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
+
+<p>其中 junkcode 可以是任何的多字节指令的硬编码，我一般的操作是写一个nop然后用hex编辑器将90改为E8。为什么要改为E8：</p>
+<p><img src="/2022/10/11/junkcode/1665456498035-1faeac1a-252f-45bd-871b-dabd3306549d.png" alt="img"></p>
+<p>可以看到X86_64架构下，call指令为E8 + 一个偏移地址，如果把这个junkcode设为E8，反汇编时会自动把后面的机器码识别为偏移地址，出现“吞指令”的现象。</p>
+<p><strong>实践一下</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;im here!&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    func();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先写一个简单的C程序，然后再func的puts前，插入内联汇编</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span>&#123;</span><br><span class="line">    __asm__ __volatile__(</span><br><span class="line">        <span class="string">&quot;jz label;&quot;</span></span><br><span class="line">        <span class="string">&quot;jnz label;&quot;</span></span><br><span class="line">        <span class="string">&quot;nop;&quot;</span></span><br><span class="line">        <span class="string">&quot;label:;&quot;</span></span><br><span class="line">    );</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;im here!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要记得在gcc编译时加入-masm=”intel”否则linux下的内联汇编默认使用AT&amp;T语法。</p>
+<p>此时的反编译和反汇编：</p>
+<p><img src="/2022/10/11/junkcode/1665457071258-7202ae8f-0cf9-4513-b681-1879ebf285f9.png" alt="img"></p>
+<p><img src="/2022/10/11/junkcode/1665457099193-c9248375-4751-4aae-84b8-d43e4532c222.png" alt="img"></p>
+<p>将label上的nop改为E8，输出到ELF后重新用ida打开：</p>
+<p><img src="/2022/10/11/junkcode/1665457209687-1c9049bf-a060-4f10-813b-338cbbce11d7.png" alt="img"></p>
+<p>可以看到main边上已经没有func了</p>
+<p><img src="/2022/10/11/junkcode/1665457237523-2f8b9fb8-c1b8-45c1-b3f6-6d6dc884b739.png" alt="img"></p>
+<p>有时候也会解析成这样：</p>
+<p><img src="/2022/10/11/junkcode/1665457272935-80654d42-9343-4a35-a02b-475eeceea1a6.png" alt="img"></p>
+<p>第二个是我想要的效果，不知道为什么第一个不行，可能是因为后面的指令无法被解析吧。</p>
+<p>总之都达到了混淆反汇编的效果。</p>
+<p><strong>去花：看到这种jz jnz，直接把从第一个跳转jz，一直到跳转目标地址之间直接全nop掉就行了。</strong></p>
+<h3 id="2-破坏堆栈平衡"><a href="#2-破坏堆栈平衡" class="headerlink" title="2.破坏堆栈平衡"></a>2.破坏堆栈平衡</h3><p>如果反编译器检测到指令破坏了堆栈平衡，即函数返回时与调用时堆栈状态发生了变化，就会报错。可以利用这一点构造破坏堆栈平衡的花指令，如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test eax,<span class="number">0</span>         <span class="comment">// 构造必然条件实现跳转，绕过破坏堆栈平衡的指令</span></span><br><span class="line">jz label           </span><br><span class="line">add esp,<span class="number">0x1</span>        </span><br><span class="line">label:</span><br></pre></td></tr></table></figure>
+
+<p>反汇编效果：</p>
+<p><img src="/2022/10/11/junkcode/1665458455438-81333dad-ac2d-47c4-98a0-82f7c6cf799b.png" alt="img"></p>
+<p>原理主要是由于ida解析时碰到条件判断语句会同时解析两条支路，导致出现两条路的栈不平衡的现象。</p>
+<p>不过这个花指令似乎并没有混淆到高版本的ida：</p>
+<p><img src="/2022/10/11/junkcode/1665458531733-dccd8c82-d886-47fe-8da9-ba9717b15a7f.png" alt="img"></p>
+<p>虽然报错了，但是依然能够正常反编译。</p>
+<p>可能是由于</p>
+<ol>
+<li>代码不够复杂</li>
+<li>需要更多的junkcode</li>
+</ol>
+<p><strong>去花：通过逻辑分析，把整块不执行的代码和跳转代码nop掉即可。</strong></p>
+<h2 id="0x02-可执行花指令"><a href="#0x02-可执行花指令" class="headerlink" title="0x02 可执行花指令"></a>0x02 可执行花指令</h2><p>花指令在程序执行过程中会被执行，但执行这些代码没有任何意义，执行前后不改变任何寄存器的值，也不改变程序执行逻辑和结果，目的是加大静态分析的难度，或是混淆特征码，绕过特征检测。</p>
+<h3 id="1-call-修改返回地址"><a href="#1-call-修改返回地址" class="headerlink" title="1.call + 修改返回地址"></a>1.call + 修改返回地址</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">call label</span><br><span class="line">label:</span><br><span class="line">add [esp],<span class="number">5</span></span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+
+<p>在call中修改返回地址，使call执行完后跳过label中的指令，达到执行但是相当于没执行的效果。</p>
+<p>并且混淆了sp指针，让ida报栈不平衡的同时，识别到ret指令，会直接将函数一分为二。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;hello!&quot;</span>);</span><br><span class="line">    __asm__ __volatile__(</span><br><span class="line">        <span class="string">&quot;call label;&quot;</span></span><br><span class="line">        <span class="string">&quot;label:;&quot;</span></span><br><span class="line">        <span class="string">&quot;add [rsp],5;&quot;</span></span><br><span class="line">        <span class="string">&quot;ret;&quot;</span></span><br><span class="line">    );</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;im here!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我尝试直接使用这个汇编，但是出现了报错，原因暂时不明。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Assembler messages:</span><br><span class="line">错误： ambiguous operand size <span class="keyword">for</span> `add<span class="number">&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>所以我自己魔改了一下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;hello!&quot;</span>);</span><br><span class="line">    __asm__ __volatile__(</span><br><span class="line">        <span class="string">&quot;call label;&quot;</span></span><br><span class="line">        <span class="string">&quot;label:;&quot;</span></span><br><span class="line">        <span class="string">&quot;pop rax;&quot;</span></span><br><span class="line">        <span class="string">&quot;add rax,7;&quot;</span></span><br><span class="line">        <span class="string">&quot;push rax;&quot;</span></span><br><span class="line">        <span class="string">&quot;ret;&quot;</span></span><br><span class="line">    );</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;im here!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>缺点是长了2个字节，所以add部分改成了7，原理是一样的，只不过原来是直接在esp上add，现在改为将esp pop出来加了在push回去。</p>
+<p>反编译效果：</p>
+<p><img src="/2022/10/11/junkcode/1665459555247-14f6218e-2e8c-410c-916a-db43339cdfff.png" alt="img"></p>
+<p><img src="/2022/10/11/junkcode/1665459568072-6e83b038-345e-44b2-b3ea-c6f5b8ccc8ea.png" alt="img"></p>
+<p><img src="/2022/10/11/junkcode/1665459577600-88d7cd3b-79f0-4dc3-910e-e24d6509cf68.png" alt="img"></p>
+<p>反汇编效果：</p>
+<p><img src="/2022/10/11/junkcode/1665459605446-daf51c50-043f-46bd-a6d4-c9e8a136d6ae.png" alt="img"></p>
+<p>真-硬生生拆成两个函数。</p>
+<p>可以用于隐藏函数尾部部分代码时使用。</p>
+<p><strong>去花：从call $+5到第一个retn这段全部nop掉即可</strong></p>
+<h3 id="2-混淆特征码"><a href="#2-混淆特征码" class="headerlink" title="2.混淆特征码"></a>2.混淆特征码</h3><p>这种类别的花指令组合形式很多，用于混淆木马、病毒的特征码，躲避AV查杀，不一定会造成反汇编失败，但是会对反汇编分析造成干扰。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mov op1,op2     ----&gt;    push op2 / pop op1</span><br><span class="line">jmp label       ----&gt;    push label / ret</span><br><span class="line">call label      ----&gt;    push label_next_instruction / push label / ret</span><br><span class="line">push op         ----&gt;    sub esp,<span class="number">4</span> / mov [esp],op</span><br></pre></td></tr></table></figure>
+
+<p>主要是通过更长的代码去替换更短的代码，从而达到混淆特征码的效果。</p>
+<p>尝试了一下第2条：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;hello!&quot;</span>);</span><br><span class="line">    __asm__ __volatile__(</span><br><span class="line">        <span class="string">&quot;push label;&quot;</span></span><br><span class="line">        <span class="string">&quot;ret;&quot;</span></span><br><span class="line">        <span class="string">&quot;label:;&quot;</span></span><br><span class="line">    );</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;im here!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译时需要加入 -no-pie，因为在内联汇编中添加了.text段的地址（push label）。</p>
+<p>反编译效果：</p>
+<p><img src="/2022/10/11/junkcode/1665460331363-8a06b6f6-5a3a-4862-8774-c39cb9f6e16c.png" alt="img"></p>
+<p>反汇编效果比想象的要好：</p>
+<p><img src="/2022/10/11/junkcode/1665460438664-ff9d95ea-1769-4b76-af80-252782c484c6.png" alt="img"></p>
+<p>直接把后面那段整没了。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">K0nashi</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://blog.k0nashi.cn/2022/10/11/junkcode/">http://blog.k0nashi.cn/2022/10/11/junkcode/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://blog.k0nashi.cn" target="_blank">K0nashi</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/reverse/">reverse</a><a class="post-meta__tags" href="/tags/bypass/">bypass</a></div><div class="post_share"><div class="social-share" data-image="/2022/10/11/junkcode/1665457237523-2f8b9fb8-c1b8-45c1-b3f6-6d6dc884b739.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/10/10/%E4%BD%BF%E7%94%A8QEMU%E8%BF%9B%E8%A1%8CIOT%E5%9B%BA%E4%BB%B6%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"><img class="next-cover" src="/2022/10/10/%E4%BD%BF%E7%94%A8QEMU%E8%BF%9B%E8%A1%8CIOT%E5%9B%BA%E4%BB%B6%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/u=2613153196,798330319&amp;fm=253&amp;fmt=auto&amp;app=120&amp;f=PNG.webp" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">使用QEMU进行IOT固件的虚拟环境搭建</div></div></a></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">K0nashi</div><div class="author-info__description">Member of A1natas</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/k0nashi"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:k0nashi@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="http://wpa.qq.com/msgrd?v=3&amp;uin=562723584&amp;site=qq&amp;menu=yes" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">Welcome to my blog!</div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="card-content"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E8%8A%B1%E6%8C%87%E4%BB%A4-amp-%E5%8E%BB%E8%8A%B1%E6%8C%87%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">基础花指令&amp;去花指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01%E4%B8%8D%E5%8F%AF%E6%89%A7%E8%A1%8C%E8%8A%B1%E6%8C%87%E4%BB%A4"><span class="toc-number">1.1.</span> <span class="toc-text">0x01不可执行花指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%A1%AC%E7%BC%96%E7%A0%81%E5%A4%9A%E5%AD%97%E8%8A%82%E6%8C%87%E4%BB%A4"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.硬编码多字节指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%A0%B4%E5%9D%8F%E5%A0%86%E6%A0%88%E5%B9%B3%E8%A1%A1"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.破坏堆栈平衡</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-%E5%8F%AF%E6%89%A7%E8%A1%8C%E8%8A%B1%E6%8C%87%E4%BB%A4"><span class="toc-number">1.2.</span> <span class="toc-text">0x02 可执行花指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-call-%E4%BF%AE%E6%94%B9%E8%BF%94%E5%9B%9E%E5%9C%B0%E5%9D%80"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.call + 修改返回地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%B7%B7%E6%B7%86%E7%89%B9%E5%BE%81%E7%A0%81"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.混淆特征码</span></a></li></ol></li></ol></li></ol></div></div></div><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/10/11/junkcode/" title="基础花指令&amp;去花指令"><img src="/2022/10/11/junkcode/1665457237523-2f8b9fb8-c1b8-45c1-b3f6-6d6dc884b739.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基础花指令&amp;去花指令"/></a><div class="content"><a class="title" href="/2022/10/11/junkcode/" title="基础花指令&amp;去花指令">基础花指令&amp;去花指令</a><time datetime="2022-10-11T05:56:08.000Z" title="发表于 2022-10-11 13:56:08">2022-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/10/%E4%BD%BF%E7%94%A8QEMU%E8%BF%9B%E8%A1%8CIOT%E5%9B%BA%E4%BB%B6%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="使用QEMU进行IOT固件的虚拟环境搭建"><img src="/2022/10/10/%E4%BD%BF%E7%94%A8QEMU%E8%BF%9B%E8%A1%8CIOT%E5%9B%BA%E4%BB%B6%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/u=2613153196,798330319&amp;fm=253&amp;fmt=auto&amp;app=120&amp;f=PNG.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用QEMU进行IOT固件的虚拟环境搭建"/></a><div class="content"><a class="title" href="/2022/10/10/%E4%BD%BF%E7%94%A8QEMU%E8%BF%9B%E8%A1%8CIOT%E5%9B%BA%E4%BB%B6%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="使用QEMU进行IOT固件的虚拟环境搭建">使用QEMU进行IOT固件的虚拟环境搭建</a><time datetime="2022-10-10T10:00:34.000Z" title="发表于 2022-10-10 18:00:34">2022-10-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/06/notes/" title="pwn各版本数据结构笔记"><img src="https://img-blog.csdnimg.cn/d9dd752065894493b18d08abb51c4db4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="pwn各版本数据结构笔记"/></a><div class="content"><a class="title" href="/2022/09/06/notes/" title="pwn各版本数据结构笔记">pwn各版本数据结构笔记</a><time datetime="2022-09-06T10:15:52.000Z" title="发表于 2022-09-06 18:15:52">2022-09-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/26/babyshellcode/" title="babyshellcode"><img src="https://img-blog.csdnimg.cn/20210614190617508.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="babyshellcode"/></a><div class="content"><a class="title" href="/2021/10/26/babyshellcode/" title="babyshellcode">babyshellcode</a><time datetime="2021-10-26T01:19:33.000Z" title="发表于 2021-10-26 09:19:33">2021-10-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/14/syscall-table/" title="Linux x86架构64位、32位系统调用表"><img src="/2021/09/14/syscall-table/system_call.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux x86架构64位、32位系统调用表"/></a><div class="content"><a class="title" href="/2021/09/14/syscall-table/" title="Linux x86架构64位、32位系统调用表">Linux x86架构64位、32位系统调用表</a><time datetime="2021-09-14T07:26:13.000Z" title="发表于 2021-09-14 15:26:13">2021-09-14</time></div></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/footer.png)"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By K0nashi</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
